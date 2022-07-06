@@ -1,14 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
-import PageOne from './components/PageOne';
-import PageTwo from './components/PageTwo';
+import Compass from './components/Compass';
+import Log from './components/Log';
+import Collections from './components/Collections';
 
 function Main() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/page1" element={<PageOne />} />
-      <Route path="/page2" element={<PageTwo />} />
+      <Route path="/Compass" element={<Compass />} />
+      <Route path="/Log" element={<Log />} />
+      <Route path="/Collections" element={<Collections />} />
     </Routes>
   );
 }

@@ -9,21 +9,16 @@ interface Props {
 interface State {
   userName: string,
   setUserName: (arg: string) => void,
-  themeColor: string,
-  setThemeColor: (arg: string) => void,
 }
 
 export const AppContext = createContext<State | null>(null);
 export const AppContextProvider: FC<Props> = function contextComponent({ children }) {
-  const [userName, setUserName] = useState('Yoshisaur');
-  const [themeColor, setThemeColor] = useState('light');
+  const [userName, setUserName] = useState('Shakespeare');
 
   const value = useMemo(() => ({
     userName,
     setUserName,
-    themeColor,
-    setThemeColor,
-  }), [userName, themeColor]);
+  }), [userName]);
 
   return (
     <AppContext.Provider value={value}>
