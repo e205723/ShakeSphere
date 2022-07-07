@@ -6,6 +6,7 @@ function Compass() {
   return (
     <div>
       <p>{`Hello, ${appContext!.userName}!`}</p>
+      <p>This page is Compass.</p>
     </div>
   );
 }
