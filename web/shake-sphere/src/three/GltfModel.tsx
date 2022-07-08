@@ -22,7 +22,7 @@ const GltfModel = function createGltfModel(arg: GltfModelArg) {
       ref={ref}
       object={gltf.scene}
       position={arg.position}
-      scale={hovered ? arg.scale * 1.2 : arg.scale}
+      scale={hovered ? arg.scale * 1.0 : arg.scale}
       onPointerOver={() => hover(true)}
       onPointerOut={() => hover(false)}
     />

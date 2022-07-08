@@ -9,7 +9,9 @@ function Home() {
     <div className="Home">
       <p>{`Hello, ${appContext!.userName}!`}</p>
       <p>This page is Home.</p>
-      <ModelViewer modelPath="/sample.glb" scale={40} position={[0, 0, 0]} />
+      <div className="Model">
+        <ModelViewer modelPath="/sample.glb" scale={1.5} position={[0, -5, 0]} />
+      </div>
     </div>
   );
 }

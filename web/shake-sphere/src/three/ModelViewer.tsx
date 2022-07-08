@@ -4,7 +4,7 @@ import { OrbitControls } from '@react-three/drei';
 import PropTypes from 'prop-types';
 import GltfModel from './GltfModel';
 
-const ModelViewer = function createModelViewer({ modelPath = '', scale = 40, position = [0, 0, 0] }) {
+const ModelViewer = function createModelViewer({ modelPath = '', scale = 1, position = [0, 0, 0] }) {
   return (
     <Canvas>
       <ambientLight intensity={0.3} />

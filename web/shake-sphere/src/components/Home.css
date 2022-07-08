@@ -1,2 +1,7 @@
-.Home {
+.Model {
+  height: 300px;
+  weight: 200px;
+}
+
+ModelViewer {
 }
