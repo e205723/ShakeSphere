@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  web:
+  react:
     image: node:18.4.0
-    container_name: web
+    container_name: react
     working_dir: /projects
     ports:
       - "3000:3000"
