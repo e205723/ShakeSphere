@@ -1,12 +1,23 @@
 version: '3.8'
 
 services:
+  nginx:
+    image: nginx:1.23.0
+    container_name: nginx
+    depends_on:
+      - react
+      - app
+    links:
+      - react
+      - app
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+    ports:
+      - 80:80
   react:
     image: node:18.4.0
     container_name: react
     working_dir: /projects
-    ports:
-      - "3000:3000"
     volumes:
       - "./react:/projects"
     tty: true
@@ -16,8 +27,8 @@ services:
     working_dir: /app
     depends_on:
       - db
-    ports:
-      - 8080:8080
+    links:
+      - db
     volumes:
       - './app:/app'
     tty: true
@@ -25,8 +36,6 @@ services:
     image: postgres:14.4
     container_name: db
     restart: always
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
