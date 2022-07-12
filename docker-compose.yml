@@ -8,7 +8,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "./web:/projects"
+      - "./react:/projects"
     tty: true
   app:
     image: golang:1.18
