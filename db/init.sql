@@ -2,6 +2,7 @@ CREATE TABLE users (
     id SERIAL NOT NULL PRIMARY KEY,
     name CHARACTER(255) NOT NULL UNIQUE,
     password CHARACTER(255) NOT NULL,
+    current_message_id INT NOT NULL DEFAULT 1,
     next_destination_id INT NOT NULL DEFAULT 1
 );
 
