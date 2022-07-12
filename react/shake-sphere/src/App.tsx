@@ -8,8 +8,8 @@ export default function App() {
       <div>
         <ul>
           <li><Link to="/">Home</Link></li>
+          <li><Link to="/Messages">Messages</Link></li>
           <li><Link to="/Compass">Compass</Link></li>
-          <li><Link to="/Log">Log</Link></li>
           <li><Link to="/Collections">Collections</Link></li>
         </ul>
         <hr />

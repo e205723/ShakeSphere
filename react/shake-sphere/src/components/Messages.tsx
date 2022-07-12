@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 
-function Log() {
+function Messages() {
   const appContext = useContext(AppContext);
   return (
     <div>
@@ -10,4 +10,4 @@ function Log() {
     </div>
   );
 }
-export default Log;
+export default Messages;
