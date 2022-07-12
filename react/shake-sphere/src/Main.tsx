@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Messages from './components/Messages';
-import Compass from './components/Compass';
-import Collections from './components/Collections';
+import Home from './views/Home';
+import Messages from './views/Messages';
+import Compass from './views/Compass';
+import Collections from './views/Collections';
 
 function Main() {
   return (
