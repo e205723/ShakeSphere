@@ -1,5 +1,6 @@
 import { ChangeEvent, useContext, useState } from 'react';
 import Modal from 'react-modal';
+import useSWR from 'swr';
 import { AppContext } from '../contexts/AppContext';
 
 function SignUpModal() {
@@ -19,8 +20,15 @@ function SignUpModal() {
   const onConfirmingPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmingPassword(event.target.value);
   };
+  const { data } = useSWR('http://localhost/app/get-user', fetch);
   const sendSignUpInfo = () => {
-    console.log('Sign Up');
+    fetch('http://localhost/api/post-user', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: userName,
+        password,
+      }),
+    });
   };
   return (
     <div>

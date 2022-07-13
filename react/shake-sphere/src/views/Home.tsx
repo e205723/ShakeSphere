@@ -12,7 +12,7 @@ function Home() {
       <p>{`Hello, ${appContext!.userName}!`}</p>
       <p>This page is Home.</p>
       <div className="Model">
-        <ModelViewer modelPath="/sample.glb" scale={1.5} position={[0, -5, 0]} />
+        <ModelViewer modelPath="/armeria.glb" scale={1.5} position={[0, -5, 0]} />
       </div>
       <SignUpModal />
     </div>

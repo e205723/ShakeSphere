@@ -6,10 +6,10 @@ services:
     container_name: nginx
     depends_on:
       - react
-      - app
+      - api
     links:
       - react
-      - app
+      - api
     volumes:
       - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
     ports:
@@ -20,17 +20,21 @@ services:
     working_dir: /projects
     volumes:
       - "./react:/projects"
+    ports:
+      - 3000:3000
     tty: true
-  app:
+  api:
     image: golang:1.18
-    container_name: app
+    container_name: api
     working_dir: /app
     depends_on:
       - db
     links:
       - db
     volumes:
-      - './app:/app'
+      - './api:/app'
+    ports:
+      - 8080:8080
     tty: true
   db:
     image: postgres:14.4
@@ -39,6 +43,9 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_INITDB_ARGS="--encoding=UTF8"
     volumes: 
       - './db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql'
+    ports:
+      - 5432:5432
     tty: true
