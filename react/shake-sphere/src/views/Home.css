@@ -1,7 +1,4 @@
 .Model {
   height: 300px;
-  weight: 200px;
-}
-
-ModelViewer {
+  width: 100%;
 }

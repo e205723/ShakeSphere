@@ -1,24 +1,28 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
+import { AppContext } from '../contexts/AppContext';
 
-function SignUpModal() {
+function SignInModal() {
+  const appContext = useContext(AppContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => { setIsOpen(true); };
-  const closeModal = () => { setIsOpen(false); };
+  const closeModal = () => {
+    setIsOpen(false);
+    fetch('http://localhost/api/welcome')
+      .then((response) => response.json())
+      .then((json) => json!.name)
+      .then((name) => appContext?.setUserName(name));
+  };
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmingPassword, setConfirmingPassword] = useState('');
   const onNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
   };
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  const onConfirmingPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setConfirmingPassword(event.target.value);
-  };
-  const sendSignUpInfo = () => {
-    fetch('http://localhost/api/sign-up', {
+  const sendSignInInfo = () => {
+    fetch('http://localhost/api/sign-in', {
       method: 'POST',
       body: JSON.stringify({
         name: userName,
@@ -28,24 +32,22 @@ function SignUpModal() {
   };
   return (
     <div>
-      <button type="button" onClick={openModal}>Sign Up</button>
+      <button type="button" onClick={openModal}>Sign In</button>
       <Modal
         isOpen={modalIsOpen}
         ariaHideApp={false}
       >
         <button type="button" onClick={closeModal}>close</button>
-        <h1>Sign Up</h1>
+        <h1>Sign In</h1>
         <p>Name:</p>
         <input type="text" value={userName} onChange={onNameChange} />
         <p>Password:</p>
         <input type="password" value={password} onChange={onPasswordChange} />
-        <p>Confirm the Password:</p>
-        <input type="password" value={confirmingPassword} onChange={onConfirmingPasswordChange} />
         <div>
-          <button type="button" onClick={sendSignUpInfo}>Sign Up</button>
+          <button type="button" onClick={sendSignInInfo}>Sign In</button>
         </div>
       </Modal>
     </div>
   );
 }
-export default SignUpModal;
+export default SignInModal;

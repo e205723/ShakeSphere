@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import ModelViewer from '../three/ModelViewer';
 import SignUpModal from '../modals/SignUpModal';
+import SignInModal from '../modals/SignInModal';
 import './Home.css';
 
 function Home() {
   const appContext = useContext(AppContext);
-
   return (
     <div className="Home">
       <p>{`Hello, ${appContext!.userName}!`}</p>
@@ -15,6 +15,7 @@ function Home() {
         <ModelViewer modelPath="/armeria.glb" scale={1.5} position={[0, -5, 0]} />
       </div>
       <SignUpModal />
+      <SignInModal />
     </div>
   );
 }
