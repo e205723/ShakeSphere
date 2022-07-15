@@ -130,7 +130,7 @@ func (s *Server) HandleSignIn(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func (s *Server) Welcome(w http.ResponseWriter, r *http.Request) {
+func (s *Server) AuthenticateWithJWT(w http.ResponseWriter, r *http.Request) {
     if r.Method == http.MethodGet {
         c, err := r.Cookie("token")
         if err != nil {

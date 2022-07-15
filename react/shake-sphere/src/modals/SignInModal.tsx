@@ -9,7 +9,10 @@ function SignInModal() {
   const closeModal = () => {
     setIsOpen(false);
     fetch('http://localhost/api/welcome')
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.statusText);
+        return response.json();
+      })
       .then((json) => json!.name)
       .then((name) => appContext?.setUserName(name));
   };

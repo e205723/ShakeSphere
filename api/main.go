@@ -29,7 +29,7 @@ func main() {
 
     http.HandleFunc("/sign-up", server.HandleSignUp)
     http.HandleFunc("/sign-in", server.HandleSignIn)
-    http.HandleFunc("/welcome", server.Welcome)
+    http.HandleFunc("/authenticate-with-JWT", server.AuthenticateWithJWT)
     log.Fatal(http.ListenAndServe(":8080", nil))
     if err != nil && err != http.ErrServerClosed {
         log.Fatal(err)

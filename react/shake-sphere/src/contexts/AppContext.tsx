@@ -7,6 +7,8 @@ interface Props {
 }
 
 interface State {
+  isSignedIn: boolean,
+  setIsSignedIn: (arg: boolean) => void,
   userName: string,
   setUserName: (arg: string) => void,
   currentMessageId: number,
@@ -17,11 +19,14 @@ interface State {
 
 export const AppContext = createContext<State | null>(null);
 export const AppContextProvider: FC<Props> = function contextComponent({ children }) {
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [currentMessageId, setCurrentMessageId] = useState(0);
   const [nextDestinationId, setNextDestinationId] = useState(0);
 
   const value = useMemo(() => ({
+    isSignedIn,
+    setIsSignedIn,
     userName,
     setUserName,
     currentMessageId,
