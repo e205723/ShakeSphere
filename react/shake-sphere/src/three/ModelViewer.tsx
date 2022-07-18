@@ -7,9 +7,7 @@ import GltfModel from './GltfModel';
 const ModelViewer = function createModelViewer({ modelPath = '', scale = 1, position = [0, 0, 0] }) {
   return (
     <Canvas>
-      <ambientLight intensity={0.3} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-      <pointLight position={[-10, -10, -10]} />
+      <ambientLight intensity={0.5} />
       <Suspense fallback={null}>
         <GltfModel modelPath={modelPath} scale={scale} position={position} />
         <OrbitControls />

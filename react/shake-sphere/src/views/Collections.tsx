@@ -1,12 +1,12 @@
-import { useContext } from 'react';
-import { AppContext } from '../contexts/AppContext';
+import SphereViewer from '../three/SphereViewer';
+import './Collections.css';
 
 function Collections() {
-  const appContext = useContext(AppContext);
   return (
     <div>
-      <p>{`Hello, ${appContext!.userName}.`}</p>
-      <p>This page is Collections.</p>
+      <div className="sphere-viewer">
+        <SphereViewer modelPath="/sample.png" />
+      </div>
     </div>
   );
 }

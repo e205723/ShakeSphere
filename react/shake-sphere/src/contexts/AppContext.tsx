@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-interface State {
+export type State = {
   isSignedIn: boolean,
   setIsSignedIn: (arg: boolean) => void,
   userName: string,

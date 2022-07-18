@@ -1,27 +1,10 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
+import fetchUserName from './HomeFeatures';
 import ModelViewer from '../three/ModelViewer';
 import SignUpModal from '../modals/SignUpModal';
 import SignInModal from '../modals/SignInModal';
 import './Home.css';
-
-async function fetchUserName() {
-  const appContext = useContext(AppContext);
-  const welcomeURL = 'http://localhost/api/welcome';
-
-  await fetch(welcomeURL)
-    .then((response) => {
-      if (response.statusText === 'OK') {
-        return Promise.resolve(response.json());
-      }
-      return Promise.reject();
-    })
-    .then((json) => json!.name)
-    .then((name) => {
-      appContext!.setIsSignedIn(true);
-      appContext!.setUserName(name);
-    });
-}
 
 function Welcome() {
   const appContext = useContext(AppContext);
@@ -46,7 +29,7 @@ function Home() {
       <Welcome />
       <p>This page is Home.</p>
       <div className="Model">
-        <ModelViewer modelPath="/armeria.glb" scale={1.5} position={[0, -5, 0]} />
+        <ModelViewer modelPath="/armeria_s.glb" scale={1.5} position={[0, -3.3, 0]} />
       </div>
       <SignUpModal />
       <SignInModal />

@@ -1,7 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import Modal from 'react-modal';
+import sendSignUpInfo from './SignUpModalFeatures';
 
-function SignUpModal() {
+export default function SignUpModal() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => { setIsOpen(true); };
   const closeModal = () => { setIsOpen(false); };
@@ -17,15 +18,9 @@ function SignUpModal() {
   const onConfirmingPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmingPassword(event.target.value);
   };
-  const sendSignUpInfo = () => {
-    fetch('http://localhost/api/sign-up', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: userName,
-        password,
-      }),
-    });
-  };
+  function sendSignUpInfoButtonAction() {
+    sendSignUpInfo(userName, password);
+  }
   return (
     <div>
       <button type="button" onClick={openModal}>Sign Up</button>
@@ -42,10 +37,9 @@ function SignUpModal() {
         <p>Confirm the Password:</p>
         <input type="password" value={confirmingPassword} onChange={onConfirmingPasswordChange} />
         <div>
-          <button type="button" onClick={sendSignUpInfo}>Sign Up</button>
+          <button type="button" onClick={sendSignUpInfoButtonAction}>Sign Up</button>
         </div>
       </Modal>
     </div>
   );
 }
-export default SignUpModal;
