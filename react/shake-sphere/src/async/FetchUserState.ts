@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-import { AppContext } from '../contexts/AppContext';
+import { State } from '../contexts/AppContext';
 
-export default async function fetchUserName() {
-  const appContext = useContext(AppContext);
+export default async function FetchUserState(appContext: State | null) {
   const welcomeURL = 'http://localhost/api/authenticate-with-JWT';
-
   await fetch(welcomeURL)
     .then((response) => {
       if (response.statusText === 'OK') {
@@ -12,9 +9,9 @@ export default async function fetchUserName() {
       }
       return Promise.reject();
     })
-    .then((json) => json!.name)
-    .then((name) => {
+    .then((json) => {
       appContext!.setIsSignedIn(true);
-      appContext!.setUserName(name);
+      appContext!.setUserName(json!.userName);
+      appContext!.setHaveMessagesBeenRead(json!.haveMessagesBeenRead);
     });
 }

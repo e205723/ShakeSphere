@@ -1,8 +1,10 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
-import sendSignUpInfo from './SignUpModalFeatures';
+import { AppContext } from '../contexts/AppContext';
+import SignUp from '../async/SignUp';
 
 export default function SignUpModal() {
+  const appContext = useContext(AppContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => { setIsOpen(true); };
   const closeModal = () => { setIsOpen(false); };
@@ -18,8 +20,11 @@ export default function SignUpModal() {
   const onConfirmingPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmingPassword(event.target.value);
   };
-  function sendSignUpInfoButtonAction() {
-    sendSignUpInfo(userName, password);
+  function SignUpButtonAction() {
+    SignUp(appContext, userName, password);
+    if (appContext!.isSignedIn) {
+      closeModal();
+    }
   }
   return (
     <div>
@@ -37,7 +42,7 @@ export default function SignUpModal() {
         <p>Confirm the Password:</p>
         <input type="password" value={confirmingPassword} onChange={onConfirmingPasswordChange} />
         <div>
-          <button type="button" onClick={sendSignUpInfoButtonAction}>Sign Up</button>
+          <button type="button" onClick={SignUpButtonAction}>Sign Up</button>
         </div>
       </Modal>
     </div>

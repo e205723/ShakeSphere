@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { AppContext } from '../contexts/AppContext';
-import sendSignInInfo from './SignInModalFeatures';
+import SignIn from '../async/SignIn';
 
 function SignInModal() {
   const appContext = useContext(AppContext);
@@ -16,8 +16,11 @@ function SignInModal() {
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  async function sendSignInInfoButtonAction() {
-    await sendSignInInfo(appContext, userName, password);
+  async function SignInButtonAction() {
+    await SignIn(appContext, userName, password);
+    if (appContext!.isSignedIn) {
+      closeModal();
+    }
   }
   return (
     <div>
@@ -33,7 +36,7 @@ function SignInModal() {
         <p>Password:</p>
         <input type="password" value={password} onChange={onPasswordChange} />
         <div>
-          <button type="button" onClick={sendSignInInfoButtonAction}>Sign In</button>
+          <button type="button" onClick={SignInButtonAction}>Sign In</button>
         </div>
       </Modal>
     </div>

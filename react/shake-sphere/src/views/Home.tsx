@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
-import fetchUserName from './HomeFeatures';
+import FetchUserState from '../async/FetchUserState';
 import ModelViewer from '../three/ModelViewer';
 import SignUpModal from '../modals/SignUpModal';
 import SignInModal from '../modals/SignInModal';
@@ -8,7 +8,7 @@ import './Home.css';
 
 function Welcome() {
   const appContext = useContext(AppContext);
-  fetchUserName();
+  FetchUserState(appContext);
   if (appContext!.isSignedIn) {
     return (
       <div>
