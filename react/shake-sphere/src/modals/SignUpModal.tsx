@@ -21,10 +21,10 @@ export default function SignUpModal() {
     setConfirmingPassword(event.target.value);
   };
   function SignUpButtonAction() {
-    SignUp(appContext, userName, password);
-    if (appContext!.isSignedIn) {
-      closeModal();
-    }
+    SignUp(appContext, userName, password)
+      .then(() => {
+        closeModal();
+      });
   }
   return (
     <div>

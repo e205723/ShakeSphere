@@ -3,7 +3,9 @@ CREATE TABLE users (
     name CHARACTER(255) NOT NULL UNIQUE,
     password_hash CHARACTER(255) NOT NULL,
     current_message_id INT NOT NULL DEFAULT 1,
-    next_destination_id INT NOT NULL DEFAULT 1
+    next_destination_id INT NOT NULL DEFAULT 1,
+    have_messages_been_read SMALLINT NOT NULL DEFAULT 0,
+    is_game_complete SMALLINT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE destinations (

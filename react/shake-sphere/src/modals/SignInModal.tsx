@@ -16,11 +16,11 @@ function SignInModal() {
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  async function SignInButtonAction() {
-    await SignIn(appContext, userName, password);
-    if (appContext!.isSignedIn) {
-      closeModal();
-    }
+  function SignInButtonAction() {
+    SignIn(appContext, userName, password)
+      .then(() => {
+        closeModal();
+      });
   }
   return (
     <div>

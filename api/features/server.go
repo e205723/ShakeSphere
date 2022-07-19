@@ -58,14 +58,38 @@ func (s *Server) HandleSignUp(w http.ResponseWriter, r *http.Request) {
         if queryRrror != nil {
             log.Println("[ERROR]", queryRrror)
             w.WriteHeader(http.StatusBadRequest)
-            w.Write([]byte("bad"))
         } else {
-            w.WriteHeader(http.StatusOK)
-            w.Write([]byte("ok"))
+            expirationTime := time.Now().Add(672 * time.Hour)
+            claims := &Claims{
+                Name: user.Name,
+                StandardClaims: jwt.StandardClaims{
+                    ExpiresAt: expirationTime.Unix(),
+                },
+            }
+            token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+            tokenString, err := token.SignedString(jwtKey)
+            if err != nil {
+                w.WriteHeader(http.StatusInternalServerError)
+                return
+            }
+            cookie := &http.Cookie{
+                Name: "token",
+                Value: tokenString,
+                Expires: expirationTime,
+            }
+            http.SetCookie(w, cookie)
+            w.Header().Set("Content-Type", "application/json")
+            response := make(map[string]string)
+            response["userName"] = user.Name;
+            response["haveMessagesBeenRead"] = "0";
+            jsonResponse, err := json.Marshal(response)
+            if err != nil {
+                log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+            }
+            w.Write(jsonResponse)
         }
     } else {
         w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte("bad"))
     }
 }
 
@@ -77,7 +101,6 @@ func (s *Server) HandleSignIn(w http.ResponseWriter, r *http.Request) {
         if decodeError != nil {
             log.Println("[ERROR]", decodeError)
             w.WriteHeader(http.StatusBadRequest)
-            w.Write([]byte("bad"))
             return
         }
         passwordHash32Byte := sha256.Sum256([]byte(user.Password))
@@ -88,7 +111,6 @@ func (s *Server) HandleSignIn(w http.ResponseWriter, r *http.Request) {
         if queryError != nil {
             log.Println("[ERROR]", queryError)
             w.WriteHeader(http.StatusBadRequest)
-            w.Write([]byte("bad"))
             return
         }
         var queryResult string
@@ -122,15 +144,21 @@ func (s *Server) HandleSignIn(w http.ResponseWriter, r *http.Request) {
             Expires: expirationTime,
         }
         http.SetCookie(w, cookie)
-        w.WriteHeader(http.StatusOK)
-        w.Write([]byte("ok"))
+        w.Header().Set("Content-Type", "application/json")
+        response := make(map[string]string)
+        response["userName"] = claims.Name;
+        response["haveMessagesBeenRead"] = "0";
+        jsonResponse, err := json.Marshal(response)
+        if err != nil {
+            log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+        }
+        w.Write(jsonResponse)
     } else {
         w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte("bad"))
     }
 }
 
-func (s *Server) AuthenticateWithJWT(w http.ResponseWriter, r *http.Request) {
+func (s *Server) FetchUserState(w http.ResponseWriter, r *http.Request) {
     if r.Method == http.MethodGet {
         c, err := r.Cookie("token")
         if err != nil {
@@ -159,10 +187,26 @@ func (s *Server) AuthenticateWithJWT(w http.ResponseWriter, r *http.Request) {
             w.WriteHeader(http.StatusUnauthorized)
             return
         }
-        w.WriteHeader(http.StatusOK)
+        queryToGetHaveMessagesBeenRead := fmt.Sprintf("SELECT have_messages_been_read FROM users WHERE name='%s'", claims.Name)
+        rows, queryError := s.Db.Query(queryToGetHaveMessagesBeenRead)
+        defer rows.Close()
+        if queryError != nil {
+            log.Println("[ERROR]", queryError)
+            w.WriteHeader(http.StatusBadRequest)
+            return
+        }
+        var queryResult string
+        for rows.Next() {
+            if err := rows.Scan(&queryResult); err != nil {
+                log.Fatal(err)
+                return
+            }
+        }
+        var haveMessagesBeenRead = strings.TrimRight(queryResult, " ")
         w.Header().Set("Content-Type", "application/json")
         response := make(map[string]string)
-        response["name"] = fmt.Sprintf("%s", claims.Name)
+        response["userName"] = claims.Name;
+        response["haveMessagesBeenRead"] = haveMessagesBeenRead;
         jsonResponse, err := json.Marshal(response)
         if err != nil {
             log.Fatalf("Error happened in JSON marshal. Err: %s", err)
@@ -170,6 +214,5 @@ func (s *Server) AuthenticateWithJWT(w http.ResponseWriter, r *http.Request) {
         w.Write(jsonResponse)
     } else {
         w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte("bad"))
     }
 }
