@@ -1,0 +1,45 @@
+{
+  "messages":
+    [
+      {
+        "id": 1,
+        "messageContent": "こんにちは",
+        "isQuestion": false,
+        "isLast": false,
+        "nextId": 2,
+        "nextIdIfNo": 0
+      },
+      {
+        "id": 2,
+        "messageContent": "お願い聞いてくれますか?",
+        "isQuestion": true,
+        "isLast": false,
+        "nextId": 5,
+        "nextIdIfNo": 3
+      },
+      {
+        "id": 3,
+        "messageContent": "そこをなんとか...",
+        "isQuestion": false,
+        "isLast": false,
+        "nextId": 4,
+        "nextIdIfNo": 0
+      },
+      {
+        "id": 4,
+        "messageContent": "ということで、お願いしますね?",
+        "isQuestion": true,
+        "isLast": false,
+        "nextId": 5,
+        "nextIdIfNo": 3
+      },
+      {
+        "id": 5,
+        "messageContent": "ありがとうございます!",
+        "isQuestion": false,
+        "isLast": true,
+        "nextId": 0,
+        "nextIdIfNo": 0
+      }
+    ]
+}

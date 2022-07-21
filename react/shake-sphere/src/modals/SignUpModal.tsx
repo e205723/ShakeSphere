@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { AppContext } from '../contexts/AppContext';
-import SignUp from '../async/SignUp';
+import signUp from '../async/SignUp';
 
 export default function SignUpModal() {
   const appContext = useContext(AppContext);
@@ -20,12 +20,12 @@ export default function SignUpModal() {
   const onConfirmingPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmingPassword(event.target.value);
   };
-  function SignUpButtonAction() {
-    SignUp(appContext, userName, password)
+  const signUpButtonAction = () => {
+    signUp(appContext, userName, password)
       .then(() => {
         closeModal();
       });
-  }
+  };
   return (
     <div>
       <button type="button" onClick={openModal}>Sign Up</button>
@@ -42,7 +42,7 @@ export default function SignUpModal() {
         <p>Confirm the Password:</p>
         <input type="password" value={confirmingPassword} onChange={onConfirmingPasswordChange} />
         <div>
-          <button type="button" onClick={SignUpButtonAction}>Sign Up</button>
+          <button type="button" onClick={signUpButtonAction}>Sign Up</button>
         </div>
       </Modal>
     </div>

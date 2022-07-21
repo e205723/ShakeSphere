@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Main from './Main';
 import { AppContext } from './contexts/AppContext';
-import FetchUserState from './async/FetchUserState';
+import fetchUserState from './async/FetchUserState';
 
 function Router() {
   const appContext = useContext(AppContext);
-  FetchUserState(appContext);
+  fetchUserState(appContext);
   if (appContext!.isSignedIn) {
     return (
       <ul>

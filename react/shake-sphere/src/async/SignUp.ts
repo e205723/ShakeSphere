@@ -1,6 +1,6 @@
 import { State } from '../contexts/AppContext';
 
-export default async function SignUp(
+export default async function signUp(
   appContext: State | null,
   name: string,
   password: string,
@@ -22,7 +22,7 @@ export default async function SignUp(
     .then((json) => {
       appContext!.setIsSignedIn(true);
       appContext!.setUserName(json!.userName);
-      appContext!.setHaveMessagesBeenRead(json!.haveMessagesBeenRead === '1');
+      appContext!.setHaveMessagesBeenRead(json!.haveMessagesBeenRead);
       return Promise.resolve();
     });
 }

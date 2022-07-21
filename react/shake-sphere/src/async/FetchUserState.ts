@@ -1,6 +1,6 @@
 import { State } from '../contexts/AppContext';
 
-export default async function FetchUserState(appContext: State | null) {
+export default async function fetchUserState(appContext: State | null) {
   const fetchUserStateURL = 'http://localhost/api/fetch-user-state';
   await fetch(fetchUserStateURL, {
     method: 'GET',
@@ -14,7 +14,7 @@ export default async function FetchUserState(appContext: State | null) {
     .then((json) => {
       appContext!.setIsSignedIn(true);
       appContext!.setUserName(json!.userName);
-      appContext!.setHaveMessagesBeenRead(json!.haveMessagesBeenRead === '1');
+      appContext!.setHaveMessagesBeenRead(json!.haveMessagesBeenRead);
       return Promise.resolve();
     });
 }

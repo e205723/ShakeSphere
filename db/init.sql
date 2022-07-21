@@ -4,9 +4,18 @@ CREATE TABLE users (
     password_hash CHARACTER(255) NOT NULL,
     current_message_id INT NOT NULL DEFAULT 1,
     next_destination_id INT NOT NULL DEFAULT 1,
-    have_messages_been_read SMALLINT NOT NULL DEFAULT 0,
-    is_game_complete SMALLINT NOT NULL DEFAULT 0
+    have_messages_been_read BOOLEAN NOT NULL DEFAULT FALSE,
+    is_game_complete BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+CREATE TABLE messages (
+    id SERIAL NOT NULL PRIMARY KEY,
+    json_file_path CHARACTER(255) NOT NULL
+);
+
+INSERT INTO messages (json_file_path) VALUES
+('./data/messages/test.json'),
+('hoge');
 
 CREATE TABLE destinations (
     id SERIAL NOT NULL PRIMARY KEY,

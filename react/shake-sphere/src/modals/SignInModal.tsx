@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { AppContext } from '../contexts/AppContext';
-import SignIn from '../async/SignIn';
+import signIn from '../async/SignIn';
 
 function SignInModal() {
   const appContext = useContext(AppContext);
@@ -16,12 +16,12 @@ function SignInModal() {
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  function SignInButtonAction() {
-    SignIn(appContext, userName, password)
+  const signInButtonAction = () => {
+    signIn(appContext, userName, password)
       .then(() => {
         closeModal();
       });
-  }
+  };
   return (
     <div>
       <button type="button" onClick={openModal}>Sign In</button>
@@ -36,7 +36,7 @@ function SignInModal() {
         <p>Password:</p>
         <input type="password" value={password} onChange={onPasswordChange} />
         <div>
-          <button type="button" onClick={SignInButtonAction}>Sign In</button>
+          <button type="button" onClick={signInButtonAction}>Sign In</button>
         </div>
       </Modal>
     </div>

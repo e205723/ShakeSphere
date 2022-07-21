@@ -27,9 +27,10 @@ func main() {
 
     server := features.Server{Db: db}
 
-    http.HandleFunc("/sign-up", server.HandleSignUp)
-    http.HandleFunc("/sign-in", server.HandleSignIn)
+    http.HandleFunc("/sign-up", server.SignUp)
+    http.HandleFunc("/sign-in", server.SignIn)
     http.HandleFunc("/fetch-user-state", server.FetchUserState)
+    http.HandleFunc("/fetch-messages", server.FetchMessages)
     log.Fatal(http.ListenAndServe(":8080", nil))
     if err != nil && err != http.ErrServerClosed {
         log.Fatal(err)
