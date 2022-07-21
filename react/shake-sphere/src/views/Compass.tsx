@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
+import CompassViewer from '../three/CompassViewer';
 
 function Compass() {
   const appContext = useContext(AppContext);
   return (
     <div>
-      <p>{`Hello, ${appContext!.userName}!`}</p>
-      <p>This page is Compass.</p>
+      <CompassViewer />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
-import ModelViewer from '../three/ModelViewer';
+import ArmeriaViewer from '../three/ArmeriaViewer';
 import SignUpModal from '../modals/SignUpModal';
 import SignInModal from '../modals/SignInModal';
 import './Home.css';
@@ -15,7 +15,7 @@ function Home() {
         </div>
         <p>This page is Home.</p>
         <div className="Model">
-          <ModelViewer modelPath="/armeria_s.glb" scale={1.5} position={[0, -3.3, 0]} />
+          <ArmeriaViewer />
         </div>
       </div>
     );
@@ -27,7 +27,7 @@ function Home() {
       </div>
       <p>This page is Home.</p>
       <div className="Model">
-        <ModelViewer modelPath="/armeria_s.glb" scale={1.5} position={[0, -3.3, 0]} />
+        <ArmeriaViewer />
       </div>
       <SignUpModal />
       <SignInModal />

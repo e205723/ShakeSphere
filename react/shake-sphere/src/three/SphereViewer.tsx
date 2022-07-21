@@ -1,8 +1,28 @@
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { useRef, Suspense } from 'react';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { Mesh, TextureLoader, DoubleSide } from 'three';
 import { DeviceOrientationControls } from '@react-three/drei';
 import PropTypes from 'prop-types';
-import Sphere from './Sphere';
+
+interface SphereArg {
+  modelPath: string,
+}
+
+const Sphere = function createSphere(arg: SphereArg) {
+  const ref = useRef<Mesh>(null);
+  const texture = useLoader(TextureLoader, arg.modelPath);
+
+  return (
+    <mesh ref={ref} position={[0, 0, 0]}>
+      <sphereGeometry args={[125, 50, 50]} />
+      <meshBasicMaterial
+        attach="material"
+        map={texture}
+        side={DoubleSide}
+      />
+    </mesh>
+  );
+};
 
 const ModelViewer = function createModelViewer({ modelPath = '' }) {
   return (
