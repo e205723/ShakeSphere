@@ -223,3 +223,19 @@ func (s *Server) FetchMessages(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     w.Write(jsonResponse)
 }
+
+func (s *Server) MarkMessagesAsRead(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodPost {
+        w.WriteHeader(http.StatusBadRequest)
+    }
+    claims := LoadClaimsFromJwt(w, r)
+    if (claims.Name == "") {
+        return
+    }
+    queryToUpdateHaveMessagesBeenRead := fmt.Sprintf("UPDATE users SET have_messages_been_read = TRUE WHERE name='%s'", claims.Name)
+    _, queryRrror := s.Db.Exec(queryToUpdateHaveMessagesBeenRead)
+    if queryRrror != nil {
+        log.Println("[ERROR]", queryRrror)
+        w.WriteHeader(http.StatusBadRequest)
+    }
+}

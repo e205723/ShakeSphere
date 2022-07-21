@@ -31,6 +31,7 @@ func main() {
     http.HandleFunc("/sign-in", server.SignIn)
     http.HandleFunc("/fetch-user-state", server.FetchUserState)
     http.HandleFunc("/fetch-messages", server.FetchMessages)
+    http.HandleFunc("/mark-messages-as-read", server.MarkMessagesAsRead)
     log.Fatal(http.ListenAndServe(":8080", nil))
     if err != nil && err != http.ErrServerClosed {
         log.Fatal(err)

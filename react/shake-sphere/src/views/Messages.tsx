@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { MessagesContext } from '../contexts/MessagesContext';
 import fetchMessages from '../async/FetchMessages';
+import markMessagesAsRead from '../async/MarkMessagesAsRead';
 
 function Messages() {
   const appContext = useContext(AppContext);
@@ -42,10 +43,23 @@ function Messages() {
       setMessage('');
       return 1;
     });
+    markMessagesAsRead(appContext);
   };
   useEffect(() => {
     fetchMessages(messagesContext);
   }, []);
+  if (appContext!.haveMessagesBeenRead) {
+    return (
+      <div>
+        <div>
+          <button type="button">Talk to Armeria</button>
+        </div>
+        <div>
+          <p>アルメリアに話かけてください</p>
+        </div>
+      </div>
+    );
+  }
   if (!isMessageLoaded) {
     return (
       <div>
